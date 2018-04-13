@@ -51,8 +51,36 @@ print(yanghui(7))
 print('-------------------------')
 for i in range(2):
     print(i)
+def yanghuiG(max):
+    t = [1]
+    n = 1
+    while n<max:
+        yield t
+        if n>0:
+            L = t.copy()
+            for i in range(1,len(t)):
+                L[i] = t[i]+t[i-1]
+            L.append(1)
+            # print(L)
+        t = L
+        n = n + 1
+
+yg = yanghuiG(5)
+# print(next(yg))
+# print(next(yg))
+# print(next(yg))
+# print(next(yg))
+# for i in yg:
+#     print(i)
 
 
+while True:
+    try:
+        x = next(yg)
+        print('yg: ',x)
+    except StopIteration as e:
+        print('Generator return value :' , e.value)
+        break
 
 
 
