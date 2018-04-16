@@ -8,7 +8,7 @@ from urllib import parse
 
 from aiohttp import web
 
-from apis import APIError
+import apis
 
 def get(path):
     '''
@@ -136,7 +136,7 @@ class RequestHandler(object):
         try:
             r = await self._func(**kw)
             return r
-        except APIError as e:
+        except apis.APIError as e:
             return dict(error=e.error, data=e.data, message=e.message)
 
 def add_static(app):
