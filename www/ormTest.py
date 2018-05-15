@@ -1,11 +1,15 @@
 import orm
-from models import User
+# from models import User
+from pmModels import HisAddress
 import asyncio
 loop = asyncio.get_event_loop()
 async def test():
-    await orm.create_pool(loop=loop,user='root', password='123456', db='awesome')
-    u = User(name='Test2', email='test2@example.com', passwd='1234567890', image='about:blank')
-    await u.save()
+    # await orm.create_pool(loop=loop,user='root', password='123456', db='awesome')
+    await orm.create_pool(loop=loop, user='root', password='123456', db='personmanage')
+    address = HisAddress()
+    address.addresstype = '2'
+    address.address = '大兴区旧宫镇旧忠路'
+    await address.save()
 loop.run_until_complete(test())
 
 # import orm
