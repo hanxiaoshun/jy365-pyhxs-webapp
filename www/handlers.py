@@ -69,9 +69,22 @@ def suggest(request):
         '__template__': 'suggest.html'
         # 'blogs': responsive
     }
+#
+# @get('/favicon.ico')
+# def favicon(request):
+#     # summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+#     # blogs = [
+#     #     Blog(id='1', name='Test Blog', summary=summary, created_at=time.time() - 120),
+#     #     Blog(id='2', name='Something New', summary=summary, created_at=time.time() - 3600),
+#     #     Blog(id='3', name='Learn Swift', summary=summary, created_at=time.time() - 7200)
+#     # ]
+#     return {
+#         '__template__': 'favicon.ico'
+#         # 'blogs': responsive
+#     }
 
-@get('/favicon.ico')
-def favicon(request):
+@get('/urls')
+def urls(request):
     # summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     # blogs = [
     #     Blog(id='1', name='Test Blog', summary=summary, created_at=time.time() - 120),
@@ -79,21 +92,50 @@ def favicon(request):
     #     Blog(id='3', name='Learn Swift', summary=summary, created_at=time.time() - 7200)
     # ]
     return {
-        '__template__': '/static/favicon.ico'
-        # 'blogs': responsive
+        '__template__': 'urls.html'
+        # 'blogs': urls
     }
-
-@get('/favicon.ico')
-def favicon(request):
-    # summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    # blogs = [
-    #     Blog(id='1', name='Test Blog', summary=summary, created_at=time.time() - 120),
-    #     Blog(id='2', name='Something New', summary=summary, created_at=time.time() - 3600),
-    #     Blog(id='3', name='Learn Swift', summary=summary, created_at=time.time() - 7200)
-    # ]
+import pymysql
+connection = pymysql.connect(host='60.205.228.47',
+                             user='root',
+                             password='123456',
+                             db='personmanage',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+@get('/hisAddress')
+def hisAddress(request):
+    summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    try:
+        with connection.cursor() as cursor:
+            # Read a single record
+            # sql = "SELECT `user_id`, `password` FROM `his_address` WHERE `username`=%s"
+            sql = "SELECT * FROM `his_address`"
+            cursor.execute(sql, ())
+            result = cursor.fetchall()
+            # result = cursor.fetchone()
+            print(result)
+    except:
+        print('no data for this request')
     return {
-        '__template__': '/static/favicon.ico'
-        # 'blogs': responsive
+        '__template__': 'hisAddress.html',
+        'result': result
     }
-
+@get('/toAddhisAddress')
+def toAddhisAddress(*, id):
+    try:
+        with connection.cursor() as cursor:
+            # Read a single record
+            # sql = "SELECT `user_id`, `password` FROM `his_address` WHERE `username`=%s"
+            sql = "SELECT * FROM `his_address`  WHERE `id`=%s"
+            result = cursor.execute(sql, (id))
+            # result = cursor.fetchone()
+            print(result[0])
+    except:
+        print('no data for this request')
+    return {
+        '__template__': 'hisAddress.html',
+        'result': result[0]
+    }
+# @post('/addHisAddress')
+# def addHisAddress(*, addressType, address,userid):
 
