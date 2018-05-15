@@ -76,35 +76,40 @@ class Field(object):
         return '<%s, %s:%s>' % (self.__class__.__name__, self.column_type, self.name)
 
 
-class StringField(Field):
+class CharField(Field):
 
     def __init__(self, db_column=None, name=None, primary_key=False, default=None, max_length=100, blank=True, null=True):
-        super().__init__(db_column, name, max_length, primary_key, default, blank, null)
+        super().__init__(db_column, name, max_length, primary_key, default)
+
 class BooleanField(Field):
 
-    def __init__(self, db_column=None, name=None, default=False):
+    def __init__(self, db_column=None, name=None, default=False, blank=True, null=True):
         super().__init__(db_column, name, 'boolean', False, default)
 class IntegerField(Field):
 
-    def __init__(self, db_column=None, name=None, primary_key=False, default=0):
+    def __init__(self, db_column=None, name=None, primary_key=False, default=0, blank=True, null=True):
         super().__init__(db_column, name, 'bigint', primary_key, default)
 class DecimalField(Field):
-    def __init__(self, db_column=None, name=None, primary_key=False, default=0.0, max_digits=10, decimal_places=0):
+    def __init__(self, db_column=None, name=None, primary_key=False, default=0.0, max_digits=10, decimal_places=0, blank=True, null=True):
         super().__init__(db_column, name, 'decimal', primary_key, default)
 
 class FloatField(Field):
 
-    def __init__(self, db_column=None,  name=None, primary_key=False, default=0.0):
+    def __init__(self, db_column=None,  name=None, primary_key=False, default=0.0, blank=True, null=True):
         super().__init__(db_column, name, 'real', primary_key, default)
 
 class TextField(Field):
 
-    def __init__(self, db_column=None,  name=None, default=None):
+    def __init__(self, db_column=None,  name=None, default=None, blank=True, null=True):
         super().__init__(db_column, name, 'text', False, default)
 
 class DateTimeField(Field):
-    def __init__(self, db_column=None,  name=None, default=None):
-        super().__init__()
+    def __init__(self, db_column=None,  name=None, default=None, blank=True, null=True):
+        super().__init__(db_column, name, 'datetime', False, default)
+
+class DateField(Field):
+    def __init__(self, db_column=None,  name=None, default=None, blank=True, null=True):
+        super().__init__(db_column, name, 'date', False, default)
 
 
 class ModelMetaclass(type):
