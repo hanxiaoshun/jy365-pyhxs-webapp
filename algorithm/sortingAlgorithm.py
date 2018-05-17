@@ -37,6 +37,30 @@ def sortingAl3(nums):
             # if flag:
             #     break
     return nums
+
+# 快速排序
+# 选择一个基准数（）
+def quikSoft(L, low, high):
+    i = low
+    j = high
+    if i >= j:
+        return L
+    key = L[i]
+    while i < j:
+        while i < j and L[j] >= key:
+            j = j-1
+        L[i] = L[j]
+        while i < j and L[i] <= key:
+            i = i+1
+        L[j] = L[i]
+    quikSoft(L, low, i-1)
+    quikSoft(L, j+1, high)
+    return L
+
+
+
+
+
 if __name__ == '__main__':
     nums = [5, 3, 7, 9, 2, 7]
     print(sortingAl(nums))
