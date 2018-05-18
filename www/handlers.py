@@ -12,21 +12,21 @@ __author__ = 'Michael Liao'
 import re, time, json, logging, hashlib, base64, asyncio
 
 from coroweb import get, post
-
-from models import User, Comment, Blog, next_id
+from pmModels import HisAddress, HisHeight, HisMobile, HisName
+# from models import User, Comment, Blog, next_id
 
 
 @get('/')
 def index(request):
     summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    blogs = [
-        Blog(id='1', name='Test Blog', summary=summary, created_at=time.time() - 120),
-        Blog(id='2', name='Something New', summary=summary, created_at=time.time() - 3600),
-        Blog(id='3', name='Learn Swift', summary=summary, created_at=time.time() - 7200)
-    ]
+    # blogs = [
+    #     Blog(id='1', name='Test Blog', summary=summary, created_at=time.time() - 120),
+    #     Blog(id='2', name='Something New', summary=summary, created_at=time.time() - 3600),
+    #     Blog(id='3', name='Learn Swift', summary=summary, created_at=time.time() - 7200)
+    # ]
     return {
         '__template__': 'blogs.html',
-        'blogs': blogs
+        # 'blogs': blogs
     }
 
 @get('/responsive')
@@ -105,20 +105,23 @@ connection = pymysql.connect(host='60.205.228.47',
 @get('/hisAddress')
 def hisAddress(request):
     summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    try:
-        with connection.cursor() as cursor:
-            # Read a single record
-            # sql = "SELECT `user_id`, `password` FROM `his_address` WHERE `username`=%s"
-            sql = "SELECT * FROM `his_address`"
-            cursor.execute(sql, ())
-            result = cursor.fetchall()
-            # result = cursor.fetchone()
-            print(result)
-    except:
-        print('no data for this request')
+    # try:
+    #     # with connection.cursor() as cursor:
+    #     #     # Read a single record
+    #     #     # sql = "SELECT `user_id`, `password` FROM `his_address` WHERE `username`=%s"
+    #     #     sql = "SELECT * FROM `his_address`"
+    #     #     cursor.execute(sql, ())
+    #     #     result = cursor.fetchall()
+    #     #     # result = cursor.fetchone()
+    #     #     print(result)
+    #
+    # except:
+    #     print('no data for this request')
+    hisAddresss = yield from HisAddress.findAll()
+    print(HisAddress.findAll())
     return {
         '__template__': 'hisAddress.html',
-        'result': result
+        'hisAddresss': hisAddresss
     }
 @get('/toAddhisAddress')
 def toAddhisAddress(*, id):
