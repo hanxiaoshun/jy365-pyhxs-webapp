@@ -6,11 +6,11 @@ __author__ = 'Michael Liao'
 configs = {
     'debug':True,
     'db':{
-        'host':'127.0.0.1',
-        'port':3306,
-        'user':'root',
-        'password':'123456',
-        'db':'awesome'
+        'host':'000000',
+        'port':0000,
+        'user':'00000',
+        'password':'000000',
+        'db':'000000'
     },
     'session':{
         'secret':'AwEsOmE'
